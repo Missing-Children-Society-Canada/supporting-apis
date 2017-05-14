@@ -12,10 +12,11 @@
       "name": "res"
     },
     {
-      "type": "queue",
+      "type": "serviceBus",
       "name": "out",
-      "queueName": "ig-subscription-media",
-      "connection": "AzureWebJobsStorage",
+      "queueName": "store_instagram_media",
+      "connection": "AzureWebJobsServiceBus",
+      "accessRights_": "Manage",
       "direction": "out"
     }
   ],
