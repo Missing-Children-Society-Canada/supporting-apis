@@ -22,8 +22,6 @@ module.exports = function (context, req) {
             body: result//WE NEED TO TIGHTEN THIS UP. IT IS RETURNING TWO WHOLE RESULT SETS>
         };
         
-        context.done();
-
         return sql.close();
     });
 }
