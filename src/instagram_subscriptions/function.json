@@ -14,7 +14,7 @@
     {
       "type": "serviceBus",
       "name": "out",
-      "queueName": "store_instagram_media",
+      "queueName": "tofilter",
       "connection": "AzureWebJobsServiceBus",
       "accessRights_": "Manage",
       "direction": "out"
