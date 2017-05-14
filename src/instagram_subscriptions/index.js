@@ -13,11 +13,15 @@ module.exports = function (context, req) {
         }
     } else {
         // map all updates to array of user_id & media_id messages, sent to queue
-        var data = req.body.map(item => JSON.stringify({
-            platform: 'instagram',
-            userid: item.object_id,
-            mediaid: item.data.media_id
-        }));
+        var data = req.body.map(item => JSON.stringify(
+        //     {
+        //     platform: 'instagram',
+        //     userid: item.object_id,
+        //     mediaid: item.data.media_id
+        // }
+        
+        item
+        ));
 
         context.bindings.out = data;
         context.res.sendStatus(200);
