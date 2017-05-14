@@ -20,6 +20,8 @@ module.exports = function (context, req) {
                 mediaid: item.data.media_id
             }));
 
+        context.log(data);
+
         context.bindings.out = data;
         context.res.sendStatus(200);
     }
