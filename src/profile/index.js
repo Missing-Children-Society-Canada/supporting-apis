@@ -16,7 +16,7 @@ module.exports = function (context, req) {
 
     docDbClient.queryDocuments(config.CollLink, query).toArray(function (err, results) {
 
-        let users = results[0];
+        //let users = results[0];
         
         let data = [{
             id:'122'
