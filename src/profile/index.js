@@ -15,26 +15,27 @@ module.exports = function (context, req) {
     docDbClient.queryDocuments(config.CollLink, query).toArray(function (err, results) {
 
         //let users = results[0];
-        
-        let data = [{
-            id:'122'
-            , name: 'Fake'
-            , picture:'http://image'
-            , datetime:'blah'
-            , twitter:1
-            , facebook:1
-            , instagram:0
-        },
-        {
-            id:'1123'
-            , name: 'Fake'
-            , picture:'http://image'
-            , datetime:'blah'
-            , twitter:1
-            , facebook:1
-            , instagram:0
-        }];
 
-        context.done(err, data);
     });
+
+    let data = [{
+        id: '122'
+        , name: 'Fake'
+        , picture: 'http://image'
+        , datetime: 'blah'
+        , twitter: 1
+        , facebook: 1
+        , instagram: 0
+    },
+    {
+        id: '1123'
+        , name: 'Fake'
+        , picture: 'http://image'
+        , datetime: 'blah'
+        , twitter: 1
+        , facebook: 1
+        , instagram: 0
+    }];
+
+    context.done(err, data);
 }
