@@ -18,7 +18,7 @@ module.exports = function (context, req) {
 
         let users = results[0];
         
-        data = [{
+        let data = [{
             id:'122'
             , name: 'Fake'
             , picture:'http://image'
