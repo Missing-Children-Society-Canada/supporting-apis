@@ -1,27 +1,43 @@
-const sql = require('mssql');
-
+const DocumentDBClient = require('documentdb').DocumentClient;
 const config = {
-    server: process.env.SqlServer,
-    database: process.env.SqlDatabase,
-    user: process.env.SqlUser,
-    password: process.env.SqlPassword,
-    port: 1433,
-    options: {
-        encrypt: true
-    }
+    DatabaseId: "reporting",
+    CollectionId: "profile",
+    Host: process.env.DocDb_Host,
+    AuthKey: process.env.DocDb_AuthKey,
 };
 
-module.exports = function (context, req) {
-    return sql.connect(config).then(pool => {
-        return pool.request()
-            .query('select * from [dbo].[vwProfiles]')
-    }).then(result => {
+config.CollLink = 'dbs/' + config.DatabaseId + '/colls/' + config.CollectionId
 
-        context.res = {
-            status: 200,
-            body: result//WE NEED TO TIGHTEN THIS UP. IT IS RETURNING TWO WHOLE RESULT SETS>
-        };
-        
-        return sql.close();
+module.exports = function (context, req) {
+    let err = null;
+
+    const docDbClient = new DocumentDBClient(config.Host, { masterKey: config.AuthKey });
+    const query = 'SELECT * FROM c';
+
+    docDbClient.queryDocuments(config.CollLink, query).toArray(function (err, results) {
+
+        let users = results[0];
+
+        let data = new Object();
+        data = [{
+            id:'122'
+            , name: 'Fake'
+            , picture:'http://image'
+            , datetime:'blah'
+            , twitter:1
+            , facebook:1
+            , instagram:0
+        },
+        {
+            id:'1123'
+            , name: 'Fake'
+            , picture:'http://image'
+            , datetime:'blah'
+            , twitter:1
+            , facebook:1
+            , instagram:0
+        }];
+
+        context.done(err, data);
     });
 }
