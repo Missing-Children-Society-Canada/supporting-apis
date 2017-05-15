@@ -9,6 +9,8 @@ const config = {
 config.CollLink = 'dbs/' + config.DatabaseId + '/colls/' + config.CollectionId
 
 module.exports = function (context, req) {
+    let err = null;
+    
     const docDbClient = new DocumentDBClient(config.Host, { masterKey: config.AuthKey });
     const query = 'SELECT * FROM c';
 
