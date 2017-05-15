@@ -39,7 +39,9 @@ module.exports = function (context, req) {
         , instagram: 0
     }];
     
-    let sdata = JSON.stringify(data);
+    context.res = {
+        body: JSON.stringify(data)
+    };
 
-    context.done(err, sdata);
+    context.done();
 }
