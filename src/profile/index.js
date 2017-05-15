@@ -10,7 +10,7 @@ config.CollLink = 'dbs/' + config.DatabaseId + '/colls/' + config.CollectionId
 
 module.exports = function (context, req) {
     let err = null;
-    
+
     const docDbClient = new DocumentDBClient(config.Host, { masterKey: config.AuthKey });
     const query = 'SELECT * FROM c';
 
@@ -38,6 +38,8 @@ module.exports = function (context, req) {
         , facebook: 1
         , instagram: 0
     }];
+    
+    let sdata = JSON.stringify(data);
 
-    context.done(err, data);
+    context.done(err, sdata);
 }
