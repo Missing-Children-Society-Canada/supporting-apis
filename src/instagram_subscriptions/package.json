@@ -2,6 +2,7 @@
   "name": "instagram-subscriptions-api",
   "version": "0.0.1",
   "dependencies": {
-    "instagram-node": "latest"
+    "documentdb": "^1.12.0",
+    "instagram-node": "^0.5.8"
   }
 }

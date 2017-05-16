@@ -1,3 +1,12 @@
+let ig = require('instagram-node');
+const DocumentDBClient = require('documentdb').DocumentClient;
+
+const config = {
+    CollLink: 'dbs/user/colls/socials',
+    Host: process.env.DocDb_Host,
+    AuthKey: process.env.DocDb_AuthKey,
+};
+
 module.exports = function (context, req) {
     if (req.method === "GET") {
         // handle new subscription request
@@ -12,17 +21,57 @@ module.exports = function (context, req) {
             context.res.sendStatus(400);
         }
     } else {
-        //DEBUG
-        context.log(JSON.stringify(req.body, null, 4));
-        // map all updates to array of user_id & media_id messages, sent to queue
-        var data = req.body.map(item => JSON.stringify(
-            {
-                platform: 'instagram',
-                userid: item.object_id,
-                mediaid: item.data.media_id
-            }));
+        const docDbClient = new DocumentDBClient(config.Host, { masterKey: config.AuthKey });
+        const query = 'SELECT TOP 1 * FROM c WHERE c.instagram[\'$id\'] = \'' + req.body[0].object_id + '\'';
 
-        context.bindings.out = data;
-        context.res.sendStatus(200);
+        docDbClient.queryDocuments(config.CollLink, query).toArray(function (err, results) {
+            if (err) {
+                return context.done(err);
+            }
+
+            let userdata = results[0];
+            if (!userdata || userdata == undefined) {
+                context.log('Not tracking user');
+                return context.done(new Error('Not tracking user'));            
+            }
+
+            if ((!userdata.instagram || userdata.instagram == undefined)) {
+                context.log('No social profiles');
+                return context.done(new Error('No social profiles'));
+            }
+
+            if (!userdata.id) {
+                context.log('No user id');
+                return context.done(new Error('No social profiles'));
+            }
+
+            // retrieve users media
+            let token = userdata.instagram.token;
+            let client = ig.instagram();
+            client.use({ access_token: token });
+            req.body.forEach(function(item) {
+                client.media(item.data.media_id, function(err, media) {
+                    if (err) {
+                        context.log("!! ERROR: " + JSON.stringify(err, null, 4));
+                        return;
+                    }
+                    
+                    if (media.tags && media.tags.findIndex(item => "hfm" === item.toLowerCase()) > -1) {
+                        // !!! HFM Found !!! //
+                        context.log("!!! HFM FOUND !!! ");
+                        context.log("User id: " + item.object_id);
+                        context.log("Tags: " + JSON.stringify(media.tags, null, 4));
+                        var data = {
+                            platform: 'instagram',
+                            userid: item.object_id,
+                            mediaid: item.data.media_id
+                        };
+                        context.bindings.out = data;
+                    }
+                });
+            }, this);
+
+            context.res.sendStatus(200);
+        });
     }
 };
