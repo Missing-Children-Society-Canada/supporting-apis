@@ -16,7 +16,7 @@
       "name": "out",
       "queueName": "tofilter",
       "connection": "AzureWebJobsServiceBus",
-      "accessRights_": "Manage",
+      "accessRights": "manage",
       "direction": "out"
     }
   ],
