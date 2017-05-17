@@ -66,6 +66,7 @@ module.exports = function (context, req) {
                             userid: item.object_id,
                             mediaid: item.data.media_id
                         };
+                        context.log("Out Data: " + JSON.stringify(data, null, 4));
                         context.bindings.out = data;
                     }
                 });
