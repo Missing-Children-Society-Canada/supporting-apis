@@ -60,13 +60,11 @@ module.exports = function (context, req) {
                         // !!! HFM Found !!! //
                         context.log("!!! HFM FOUND !!! ");
                         context.log("User id: " + item.object_id);
-                        context.log("Tags: " + JSON.stringify(media.tags, null, 4));
                         var data = {
                             platform: 'instagram',
                             userid: item.object_id,
                             mediaid: item.data.media_id
                         };
-                        context.log("Out Data: " + JSON.stringify(data, null, 4));
                         context.bindings.out = data;
                         context.done();
                     }
