@@ -68,11 +68,10 @@ module.exports = function (context, req) {
                         };
                         context.log("Out Data: " + JSON.stringify(data, null, 4));
                         context.bindings.out = data;
+                        context.done();
                     }
                 });
             }, this);
-
-            context.res.sendStatus(200);
         });
     }
 };
