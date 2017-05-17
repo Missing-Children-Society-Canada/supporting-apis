@@ -9,6 +9,7 @@ module.exports = function (context, req) {
             // if verification matches, return challenge
             context.res.raw(challenge);
         } else {
+            context.log("Error verify token does not match.")
             context.res.sendStatus(400);
         }
     } 
