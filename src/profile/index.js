@@ -127,8 +127,14 @@ module.exports = function (context, req) {
             profiles[userid] = profile;
         });
 
-        context.log(JSON.stringify(profiles, null, 4));
-        context.bindings.res = profiles;
+        // convert to array
+        let profileArray = [];
+        for (var key in profiles) {
+            profileArray.push(profiles[key]);
+        }
+
+        context.log(JSON.stringify(profileArray, null, 4));
+        context.bindings.res = profileArray;
         context.done();
     });
 
