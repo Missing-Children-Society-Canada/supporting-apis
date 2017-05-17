@@ -31,7 +31,6 @@ module.exports = function (context, req) {
                   }
                 };
                 context.log("!!!#HFM FOUND!!!");
-                context.log(JSON.stringify(data, null, 4));
                 context.bindings.out = data;
                 context.done();
               }
