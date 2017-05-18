@@ -1,8 +1,0 @@
-{
-  "name": "instagram-subscriptions-api",
-  "version": "0.0.1",
-  "dependencies": {
-    "documentdb": "^1.12.0",
-    "instagram-node": "^0.5.8"
-  }
-}
