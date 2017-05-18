@@ -133,9 +133,7 @@ module.exports = function (context, req) {
             profileArray.push(profiles[key]);
         }
 
-        context.log(JSON.stringify(profileArray, null, 4));
         context.bindings.res = profileArray;
         context.done();
     });
-
 }
